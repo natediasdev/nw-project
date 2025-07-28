@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style.css">
+    <title>N&W Vidros e Vitrines</title>
+</head>
+<body>
+    <main>
+        <header class="navigation">
+            <nav>
+                <ul>
+                  <a href="#inicial">Tela Inicial</a>
+                  <a href="#about">Quem somos?</a>
+                  <a href="#diferenciais">Diferenciais</a>
+                </ul>
+            </nav>
+        </header>
+        <section class="inicial visible" id="inicial">
+            <h1>N&W Vidros e Vitrines</h1>
+            <h2>Refletindo sua marca com transparência.</h2>
+            <a class="btn" href="https://wa.me/21967792123">Solicite um orçamento!</a>
+        </section>
+        <section class="about" id="about">
+            <h1>Quem somos?</h1>
+            <p>A W&N Vidros e Vitrines nasceu da união entre experiência técnica e paixão por entregar resultados que realmente fazem a diferença. Somos especializados na limpeza de vidros e vitrines comerciais, proporcionando aos nossos clientes uma imagem impecável, profissional e convidativa. Atuamos em comércios de rua, lojas de shopping, outlets, clínicas, escritórios e estabelecimentos de diversos segmentos.</p>
+            <p>Mais do que simplesmente limpar, cuidamos da apresentação do seu negócio como se fosse nosso. Nossos processos são pensados para gerar o menor impacto possível à rotina da sua empresa, com flexibilidade de horário, equipamentos modernos e total segurança.</p>
+            <section class="cta">
+              <h1>Quer sua fachada impecável?</h1>
+              <p>Fale agora com a equipe W&N pelo WhatsApp e solicite um orçamento sem compromisso.</p>
+              <a class="btn" href="https://wa.me/21967792123">Falar com um especialista</a>
+          </section>
+        </section>
+        <section id="diferenciais">
+            <h1>Diferenciais</h1>
+            <div class="features">
+              <div class="feature">
+                <strong>Profissionais treinados e identificados</strong>
+                <p>Equipe altamente capacitada, garantindo segurança e profissionalismo em cada visita.</p>
+              </div>
+              <div class="feature">
+                <strong>Horários flexíveis sem atrapalhar a operação</strong>
+                <p>Agendamos os serviços conforme a rotina do cliente, inclusive fora do horário comercial.</p>
+              </div>
+              <div class="feature">
+                <strong>Produtos e equipamentos profissionais</strong>
+                <p>Utilizamos apenas materiais de alto desempenho, com tecnologia adequada para limpeza profunda sem danificar o vidro ou estruturas.</p>
+              </div>
+              <div class="feature">
+                <strong>Atendimento recorrente ou pontual</strong>
+                <p>Oferecemos pacotes mensais ou atendimentos avulsos com a mesma excelência, adaptando-nos às necessidades de cada cliente.</p>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h1>Como Funciona</h1>
+            <p>Queremos facilitar o seu contato conosco. Com apenas alguns passos, conseguimos analisar sua demanda e propor a melhor solução:</p>
+            <ol>
+              <li>Envie fotos do local ou solicite uma visita técnica gratuita</li>
+              <li>Receba um orçamento sem compromisso diretamente pelo WhatsApp</li>
+              <li>Agende a execução conforme sua preferência</li>
+              <li>Tenha seu vidro limpo, brilhando e valorizando seu negócio</li>
+            </ol>
+            <p>Preencha o formulário abaixo e gere uma mensagem automática para nosso WhatsApp:</p>
+            <form onsubmit="enviarWhatsapp(); return false;">
+                <label for="nome">Seu nome:</label>
+                <input type="text" id="nome" required>
+
+                <label for="empresa">Nome da empresa:</label>
+                <input type="text" id="empresa" required>
+
+                <label for="descricao">Descreva sua necessidade:</label>
+                <textarea id="descricao" required></textarea>
+
+                <button type="submit" class="btn">Enviar via WhatsApp</button>
+            </form>
+        </section>
+        
+          <footer>
+            <p>© 2025 W&N Vidros e Vitrines – Todos os direitos reservados</p>
+          </footer>
+    </main>
+    <script>
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('section').forEach(sec => {
+            const top = sec.getBoundingClientRect().top;
+            if (top < window.innerHeight * 0.65) {
+                sec.classList.add('visible');
+            }
+            });
+        });
+
+        function enviarWhatsapp() {
+        const nome = document.getElementById("nome").value;
+        const empresa = document.getElementById("empresa").value;
+        const descricao = document.getElementById("descricao").value;
+
+        const mensagem = `Olá, me chamo ${nome} da empresa ${empresa}. Estou interessado nos serviços da W&N Vidros e Vitrines. Minha necessidade é: ${descricao}`;
+        const url = `https://wa.me/21967792123?text=${encodeURIComponent(mensagem)}`;
+
+        window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
