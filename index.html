@@ -10,11 +10,6 @@
     <main>
         <header class="navigation">
             <nav>
-              <div class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
               <ul id="nav-links">
                 <a href="#inicial">Tela Inicial</a>
                 <a href="#about">Quem somos?</a>
@@ -25,7 +20,7 @@
         <section class="inicial visible" id="inicial">
             <h1>N&W Vidros e Vitrines</h1>
             <h2>Refletindo sua marca com transparência.</h2>
-            <a class="btn" href="https://wa.me/21967792123">Solicite um orçamento!</a>
+            <a class="btn" href="https://wa.me/+5521967792123">Solicite um orçamento!</a>
         </section>
         <section class="about" id="about">
             <h1>Quem somos?</h1>
@@ -34,7 +29,7 @@
             <section class="cta">
               <h1>Quer seu vidro/vitrine impecável?</h1>
               <p>Fale agora com a equipe N&W pelo WhatsApp e solicite um orçamento sem compromisso.</p>
-              <a class="btn" href="https://wa.me/21967792123">Falar com um especialista</a>
+              <a class="btn" href="https://wa.me/+5521967792123">Falar com um especialista</a>
           </section>
         </section>
         <section id="diferenciais">
@@ -102,7 +97,7 @@
         const descricao = document.getElementById("descricao").value;
 
         const mensagem = `Olá, me chamo ${nome} da empresa ${empresa}. Estou interessado nos serviços da N&W Vidros e Vitrines. Minha necessidade é: ${descricao}`;
-        const url = `https://wa.me/21967792123?text=${encodeURIComponent(mensagem)}`;
+        const url = `https://wa.me/+5521967792123?text=${encodeURIComponent(mensagem)}`;
 
         window.open(url, '_blank');
         }
