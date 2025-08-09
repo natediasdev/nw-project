@@ -4,20 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.2.1/hamburgers.min.css">
     <title>N&W Vidros e Vitrines</title>
 </head>
 <body>
     <main>
-      <header class="navigation">
-          <nav>
-            <ul id="nav-links">
-              <a href="#inicial">Tela Inicial</a>
-              <a href="#about">Quem somos?</a>
-              <a href="#diferenciais">Diferenciais</a>
-              <a href="#contato">Contato</a>
-            </ul>
-          </nav>
+      <header class="header navigation">
+
+        <!-- Botão Hambúrguer -->
+        <button class="hamburger hamburger--spin" id="menu-btn" type="button" aria-label="Menu">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+
+        <!-- Menu de navegação -->
+        <nav id="nav-menu">
+          <ul>
+            <li><a href="#home">Início</a></li>
+            <li><a href="#sobre">Sobre Nós</a></li>
+            <li><a href="#diferenciais">Diferenciais</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </nav>
       </header>
+
       <section class="inicial visible" id="inicial">
           <h1>N&W Vidros e Vitrines</h1>
           <h2>Refletindo sua marca com transparência.</h2>

@@ -36,21 +36,34 @@ main {
   z-index: 1000;
 }
 
-.navigation nav ul {
+button.hamburger {
+  display: none;
+}
+
+button.hamburger .hamburger-inner,
+button.hamburger .hamburger-inner::before,
+button.hamburger .hamburger-inner::after, 
+button.hamburger.is-active .hamburger-inner,
+button.hamburger.is-active .hamburger-inner:after,
+button.hamburger.is-active .hamburger-inner:before  {
+  background-color: var(--light);
+}
+
+#nav-menu ul {
   display: flex;
   justify-content: space-around;
   gap: 30px;
   list-style: none;
 }
 
-.navigation nav ul a {
+#nav-menu ul a {
   color: white;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s;
 }
 
-.navigation nav ul a:hover {
+#nav-menu ul a:hover {
   color: var(--accent);
 }
 
@@ -301,32 +314,71 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
-    nav ul {
-        align-items: flex-start;
-        font-size: 1em;
-        gap: 10px;
-    }
+  #nav-menu {
+    display: none;
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    top: 70px;
+    right: 0px;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    animation: fadeIn 0.3s ease-in-out;
+    height: 100vh;
+  }
 
-    .features {
-        flex-direction: column;
-        align-items: center;
-    }
+  #nav-menu.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+  }
 
-    .feature {
-        flex: 1 1 100%;
-        width: 90%;
-    }
+  #nav-menu.active ul {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
-    form {
-        width: 90%;
-    }
+  #nav-menu ul a {
+    color: var(--accent);
+  }
 
-    .cta {
-        width: 90%;
-    }
+  #nav-menu ul a:hover{
+    color: var(--dark);
+  }
 
-    .forms {
+  button.hamburger {
+    display: block;
+  }
+
+  .features {
       flex-direction: column;
-      gap: 30px;
-    }
+      align-items: center;
+  }
+
+  .feature {
+      flex: 1 1 100%;
+      width: 90%;
+  }
+
+  form {
+      width: 90%;
+  }
+
+  .cta {
+      width: 90%;
+  }
+
+  .forms {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
