@@ -1,37 +1,69 @@
-import fetch from "node-fetch";
+// ==========================
+// Configuração do Supabase
+// ==========================
+const SUPABASE_URL = "https://wtrmtwylvzjemupxdgem.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0cm10d3lsdnpqZW11cHhkZ2VtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2OTI0MjYsImV4cCI6MjA3MDI2ODQyNn0.EKot6y4HD4QR3llA6rwY4CtFQhWWixupU8FtMQvw4wA";
 
-export async function handler(event) {
-    try {
-        const { nome, rating, comment, token } = JSON.parse(event.body);
+// ==========================
+// Função para enviar avaliação ao Supabase
+// ==========================
+async function addReview(e) {
+  e.preventDefault(); // Impede o reload da página
 
-        // Verifica reCAPTCHA
-        const recaptchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`
-        });
+  // Referências aos elementos do formulário
+  const nome = document.getElementById("name").value.trim();
+  const comment = document.getElementById("review").value.trim();
+  const ratingElement = document.querySelector('input[name="nota"]:checked');
+  const rating = ratingElement ? Number(ratingElement.value) : null;
 
-        const recaptchaData = await recaptchaResponse.json();
-        if (!recaptchaData.success || recaptchaData.score < 0.5) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ success: false, message: "Falha na verificação do reCAPTCHA." })
-            };
-        }
+  const statusMsg = document.getElementById("status");
+  statusMsg.textContent = "";
+  
+  // Validação antes de enviar
+  if (!nome || !comment || !rating) {
+    statusMsg.textContent = "Preencha seu nome, comentário e selecione uma nota.";
+    return;
+  }
 
-        // Aqui, você poderia salvar no banco de dados ou planilha.
-        console.log("Nova avaliação:", { nome, rating, comment });
+  // Monta o objeto para enviar ao Supabase
+  const payload = { nome, rating, comment };
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ success: true })
-        };
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/reviews`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify(payload)
+    });
 
-    } catch (error) {
-        console.error(error);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ success: false, message: "Erro no servidor" })
-        };
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Erro Supabase:", data);
+      statusMsg.textContent = "Erro ao enviar avaliação. Veja o console.";
+      return;
     }
+
+    // Sucesso!
+    statusMsg.textContent = "Avaliação enviada com sucesso!";
+    document.getElementById("reviewForm").reset();
+
+  } catch (error) {
+    console.error("Erro de rede:", error);
+    statusMsg.textContent = "Erro de rede. Tente novamente.";
+  }
 }
+
+// ==========================
+// Associa o evento de submit ao formulário
+// ==========================
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("reviewForm");
+  if (form) {
+    form.addEventListener("submit", addReview);
+  }
+});
