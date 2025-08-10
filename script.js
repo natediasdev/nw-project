@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const comentario = document.getElementById('review').value.trim();
     // pega a nota selecionada
     const notaEl = form.querySelector('input[name="nota"]:checked');
-    const nota = notaEl ? Number(notaEl.value) : 1;
+    const rating = notaEl ? Number(notaEl.value) : 1;
 
     if (!nome || !comentario) {
       msg.textContent = 'Preencha nome e comentário.';
