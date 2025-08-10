@@ -39,71 +39,70 @@ const url = `https://wa.me/+5521967792123?text=${encodeURIComponent(mensagem)}`;
 window.open(url, '_blank');
 }
 
-document.getElementById("reviewForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+// Formulário de avaliação
+/* === CONFIGURE AQUI === */
+const SUPABASE_URL = "https://wtrmtwylvzjemupxdgem.supabase.co"; // exemplo do seu projeto
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0cm10d3lsdnpqZW11cHhkZ2VtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2OTI0MjYsImV4cCI6MjA3MDI2ODQyNn0.EKot6y4HD4QR3llA6rwY4CtFQhWWixupU8FtMQvw4wA";
+/* ======================= */
 
-  const name = document.getElementById("name").value;
-  const rating = document.getElementById("rating").value;
-  const comment = document.getElementById("comment").value;
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('reviewForm');
+  const submitBtn = document.getElementById('submitReview');
+  const msg = document.getElementById('status');
 
-  document.getElementById("statusMsg").textContent = "Enviando...";
-
-// Executa reCAPTCHA v3
-grecaptcha.execute("SEU_SITE_KEY", { action: "submit" }).then(function(token) {
-    fetch("/.netlify/functions/addReview", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, rating, comment, token })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-        document.getElementById("statusMsg").textContent = "Avaliação enviada com sucesso!";
-        document.getElementById("reviewForm").reset();
-        } else {
-        document.getElementById("statusMsg").textContent = "Falha ao enviar: " + data.message;
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        document.getElementById("statusMsg").textContent = "Erro de conexão.";
-    });
-    });
-});
-
-
-/* Formulário de Avaliação */
-document.getElementById('reviewForm').addEventListener('submit', function(e) {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    msg.textContent = '';
+    submitBtn.disabled = true;
 
-    const nome = document.getElementById('nome').value;
-    const mensagem = document.getElementById('mensagem').value;
-    const status = document.getElementById('status');
+    const nome = document.getElementById('name').value.trim();
+    const comentario = document.getElementById('review').value.trim();
+    // pega a nota selecionada
+    const notaEl = form.querySelector('input[name="nota"]:checked');
+    const nota = notaEl ? Number(notaEl.value) : 1;
 
-    grecaptcha.ready(function() {
-        grecaptcha.execute('6LdAWp8rAAAAAFRMwZyx4d3_VjGg32k2yr0wrvnF', {action: 'submit'}).then(function(token) {
-            fetch('/.netlify/functions/addReview', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ nome, mensagem, token })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.success) {
-                    status.innerText = "Avaliação enviada com sucesso!";
-                    status.style.color = "green";
-                    document.getElementById('reviewForm').reset();
-                } else {
-                    status.innerText = "Falha ao enviar avaliação.";
-                    status.style.color = "red";
-                }
-            })
-            .catch(() => {
-                status.innerText = "Erro de conexão.";
-                status.style.color = "red";
-            });
-        });
-    });
+    if (!nome || !comentario) {
+      msg.textContent = 'Preencha nome e comentário.';
+      submitBtn.disabled = false;
+      return;
+    }
+
+    // payload - ajusta nomes de campo conforme sua tabela
+    const payload = { nome, rating, comment };
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Prefer': 'return=representation' // retorna o registro criado
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const body = await res.json();
+
+      if (!res.ok) {
+        console.error('Supabase error', body);
+        msg.textContent = 'Erro ao enviar avaliação. Veja o console.';
+        submitBtn.disabled = false;
+        return;
+      }
+
+      // sucesso
+      msg.textContent = 'Avaliação enviada! Obrigado.';
+      form.reset();
+      // opcional: fechar modal ou rolar até o topo do formulário
+      window.scrollTo({ top: form.offsetTop - 40, behavior: 'smooth' });
+
+      // você pode também recarregar lista de avaliações aqui (se tiver)
+    } catch (err) {
+      console.error(err);
+      msg.textContent = 'Erro de rede. Tente novamente.';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
 });
