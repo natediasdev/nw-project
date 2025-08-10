@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const notaEl = form.querySelector('input[name="nota"]:checked');
     const rating = notaEl ? Number(notaEl.value) : 1;
 
-    if (!nome || !comentario) {
+    if (!nome || !comment) {
       msg.textContent = 'Preencha nome e comentário.';
       submitBtn.disabled = false;
       return;
