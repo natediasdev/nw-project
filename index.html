@@ -98,7 +98,14 @@
           </div>
           <div class="formPreview">
             <h1>Deixe sua Avaliação</h1>
-            <form class="reviewForm">
+            <form class="reviewForm" id="reviewForm">
+              <div class="rating" aria-label="Avaliação">
+                <input type="radio" id="star5" name="nota" value="5"><label for="star5" title="5 estrelas">★</label>
+                <input type="radio" id="star4" name="nota" value="4"><label for="star4" title="4 estrelas">★</label>
+                <input type="radio" id="star3" name="nota" value="3"><label for="star3" title="3 estrelas">★</label>
+                <input type="radio" id="star2" name="nota" value="2"><label for="star2" title="2 estrelas">★</label>
+                <input type="radio" id="star1" name="nota" value="1" checked><label for="star1" title="1 estrela">★</label>
+              </div>
               <div class="input-group">
                 <input type="text" id="name" name="name" required>
                 <label for="name">Seu nome</label>
@@ -122,7 +129,7 @@
       </footer>
     </main>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script src="https://www.google.com/recaptcha/api.js?render=6LdAWp8rAAAAAFRMwZyx4d3_VjGg32k2yr0wrvnF"></script>
 </body>
 </html>

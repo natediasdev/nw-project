@@ -274,6 +274,34 @@ section.visible {
   box-shadow: 0 4px 15px rgba(0, 255, 208, 0.5);
 }
 
+.rating {
+  display: inline-flex;
+  direction: rtl; /* para selecionar corretamente com CSS */
+  gap: 6px;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0.25rem 0;
+}
+
+.rating input { 
+  display: none; 
+}
+
+.rating label {
+  font-size: 1.8rem;
+  color: #cfd8dc;
+  cursor: pointer;
+  transition: color .15s ease;
+  user-select: none;
+}
+
+/* cor quando selecionado ou hover */
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #0ea5b7; /* tom vidro/teal — ajuste se quiser */
+}
+
 /* Mensagem de status */
 #status {
   margin-top: 15px;
