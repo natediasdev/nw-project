@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.disabled = true;
 
     const nome = document.getElementById('name').value.trim();
-    const comentario = document.getElementById('review').value.trim();
+    const comment = document.getElementById('review').value.trim();
     // pega a nota selecionada
     const notaEl = form.querySelector('input[name="nota"]:checked');
     const rating = notaEl ? Number(notaEl.value) : 1;
